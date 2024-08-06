@@ -13,7 +13,6 @@ public class CatsgramApp {
         System.out.print("Введите JSON => ");
         final String input = scanner.nextLine();
 
-
         try {
             gson.fromJson(input, Map.class);
             System.out.println("Был введён корректный JSON");
