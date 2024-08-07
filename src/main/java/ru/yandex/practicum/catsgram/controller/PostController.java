@@ -22,17 +22,17 @@ public class PostController {
     }
 
     @PostMapping
-    public Post create(@RequestBody Post post) {
+    public Post create(@RequestBody Post newPost) {
         // проверяем выполнение необходимых условий
-        if (post.getDescription() == null || post.getDescription().isBlank()) {
+        if (newPost.getDescription() == null || newPost.getDescription().isBlank()) {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
         // формируем дополнительные данные
-        post.setId(getNextId());
-        post.setPostDate(Instant.now());
+        newPost.setId(getNextId());
+        newPost.setPostDate(Instant.now());
         // сохраняем новую публикацию в памяти приложения
-        posts.put(post.getId(), post);
-        return post;
+        posts.put(newPost.getId(), newPost);
+        return newPost;
 
     }
 
@@ -61,6 +61,6 @@ public class PostController {
             oldPost.setDescription(newPost.getDescription());
             return oldPost;
         }
-        throw new NotFoundException("Пост с id = " + newPost.getId() + " не найде");
+        throw new NotFoundException("Пост с id = " + newPost.getId() + " не найден.");
     }
 }
