@@ -24,7 +24,7 @@ public class UserService {
     public Optional<User> findUserById(long id) {
         User user = users.get(id);
 
-        if (user == null){
+        if (user == null) {
             return Optional.empty();
         } else {
             return Optional.of(user);

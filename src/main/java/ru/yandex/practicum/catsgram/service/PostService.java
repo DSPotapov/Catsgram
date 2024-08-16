@@ -29,6 +29,16 @@ public class PostService {
         return posts.values();
     }
 
+    public Optional<Post> findPostById(long id) {
+        Post post = posts.get(id);
+
+        if (post == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(post);
+        }
+    }
+
     public Post create(Post post) {
         if (post.getDescription() == null || post.getDescription().isBlank()) {
             throw new ConditionsNotMetException("Описание не может быть пустым");
