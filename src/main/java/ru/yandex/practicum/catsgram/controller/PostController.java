@@ -19,8 +19,17 @@ public class PostController {
     }
 
     @GetMapping
-    public Collection<Post> findAll() {
-        return postService.findAll();
+    public Collection<Post> findAll(
+            @RequestParam (defaultValue = "10") int size,
+            @RequestParam (defaultValue = "0") long from,
+            @RequestParam (defaultValue = "asc")String sort
+    ) {
+        if (size < 0){
+            throw new ConditionsNotMetException("некорректный параметр запроса size " + size );
+        }
+
+        SortOrder sortOrder = SortOrder.from(sort);
+        return postService.findAll(size, from, sortOrder);
     }
 
     @GetMapping("/{id}")
