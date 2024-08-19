@@ -1,5 +1,6 @@
 package ru.yandex.practicum.catsgram.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.controller.SortOrder;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
@@ -14,13 +15,10 @@ import java.util.stream.Collectors;
 // Указываем, что класс PostService - является бином и его
 // нужно добавить в контекст приложения
 @Service
+@RequiredArgsConstructor
 public class PostService {
 
     UserService userService;
-
-    public PostService(UserService userService) {
-        this.userService = userService;
-    }
 
     private final Map<Long, Post> posts = new HashMap<>();
 

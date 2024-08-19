@@ -1,5 +1,7 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.model.Post;
@@ -20,12 +22,12 @@ public class PostController {
 
     @GetMapping
     public Collection<Post> findAll(
-            @RequestParam (defaultValue = "10") int size,
-            @RequestParam (defaultValue = "0") long from,
-            @RequestParam (defaultValue = "asc")String sort
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "0") long from,
+            @RequestParam(defaultValue = "asc") String sort
     ) {
-        if (size < 0){
-            throw new ConditionsNotMetException("некорректный параметр запроса size " + size );
+        if (size < 0) {
+            throw new ConditionsNotMetException("некорректный параметр запроса size " + size);
         }
 
         SortOrder sortOrder = SortOrder.from(sort);
@@ -43,6 +45,7 @@ public class PostController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Post create(@RequestBody Post newPost) {
         return postService.create(newPost);
     }
