@@ -12,13 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/posts")
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
 
     @GetMapping
     public Collection<Post> findAll(
