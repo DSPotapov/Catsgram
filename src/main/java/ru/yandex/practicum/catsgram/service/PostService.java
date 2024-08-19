@@ -17,9 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-
     UserService userService;
-
     private final Map<Long, Post> posts = new HashMap<>();
 
     public Collection<Post> findAll(int size, long from, SortOrder sortOrder) {
