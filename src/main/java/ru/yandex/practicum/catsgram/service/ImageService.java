@@ -1,6 +1,7 @@
 package ru.yandex.practicum.catsgram.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class ImageService {
     private final Map<Long, Image> images = new HashMap<>();
     private final PostService postService;
+//    @Value("${image-directory}")
     private final String imageDirectory = "D:/dev/java/ya_practicum/catsgram_storage";
 
     // получение данных об изображениях указанного поста
