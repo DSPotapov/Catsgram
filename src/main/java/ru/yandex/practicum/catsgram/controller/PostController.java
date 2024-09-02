@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
+import ru.yandex.practicum.catsgram.exception.ParameterNotValidException;
 import ru.yandex.practicum.catsgram.model.Post;
 import ru.yandex.practicum.catsgram.service.PostService;
 
@@ -23,11 +24,19 @@ public class PostController {
             @RequestParam(defaultValue = "0") long from,
             @RequestParam(defaultValue = "asc") String sort
     ) {
-        if (size < 0) {
-            throw new ConditionsNotMetException("некорректный параметр запроса size " + size);
-        }
 
         SortOrder sortOrder = SortOrder.from(sort);
+        if (sortOrder == null) {
+            throw new ParameterNotValidException("sort", "Получено: " + sort + " должно быть: ask или desc");
+        }
+        if (size <= 0) {
+            throw new ParameterNotValidException("size", "Размер должен быть больше нуля");
+        }
+
+        if (from < 0) {
+            throw new ParameterNotValidException("from", "Начало выборки должно быть положительным числом");
+        }
+
         return postService.findAll(size, from, sortOrder);
     }
 
@@ -50,6 +59,13 @@ public class PostController {
     @PutMapping
     public Post update(@RequestBody Post newPost) {
         return postService.update(newPost);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handle(final ParameterNotValidException e) {
+        return new ErrorResponse(
+                "Некорректное значение параметра" + e.getParameter() + " : " + e.getReason(), e.getMessage());
     }
 
 }
