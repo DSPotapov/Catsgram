@@ -1,48 +1,29 @@
 package ru.yandex.practicum.catsgram.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
+import ru.yandex.practicum.catsgram.dto.UserDto;
 import ru.yandex.practicum.catsgram.model.User;
 import ru.yandex.practicum.catsgram.service.UserService;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-
-    UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @GetMapping
-    public Collection<User> findAll() {
-        return userService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public User findUserById(@PathVariable long id) {
-        Optional<User> optionalUser = userService.findUserById(id);
-        if (optionalUser.isEmpty()) {
-            throw new ConditionsNotMetException("Пользователь с id = " + id + " не найден");
-        } else {
-            return optionalUser.get();
-        }
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> getUsers() {
+        return userService.getUsers();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User create(@RequestBody User newUser) {
+    public int create(@RequestBody User newUser) {
         return userService.create(newUser);
     }
-
-    @PutMapping
-    public User update(@RequestBody User newUser) {
-        return userService.update(newUser);
-    }
-
 }
