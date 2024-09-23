@@ -24,7 +24,7 @@ public class UserService {
         return userRepository.findUserById(authorId);
     }
 
-    public int create(User user) {
+    public User create(User user) {
         return userRepository.create(user);
     }
 

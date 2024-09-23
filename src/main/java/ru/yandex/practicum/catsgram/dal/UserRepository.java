@@ -8,6 +8,7 @@ import ru.yandex.practicum.catsgram.dto.UserDto;
 import ru.yandex.practicum.catsgram.mapper.UserMapper;
 import ru.yandex.practicum.catsgram.model.User;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +31,9 @@ public class UserRepository {
         return Optional.ofNullable(jdbc.query(query, mapper).get(0));
     }
 
-    public int create(User user) {
-        String query = "INSERT into users (id, username, email, password, registration_date) VALUES ( ?, ?, ?, ?, ?)";
-        return jdbc.update(query, mapper);
+    public User create(User user) {
+        String query = "INSERT into users (username, email, password, registration_date) VALUES ( ?, ?, ?, ?)";
+        jdbc.update(query, user.getUsername(), user.getEmail(), user.getPassword(), LocalDate.now());
+        return user;
     }
 }
