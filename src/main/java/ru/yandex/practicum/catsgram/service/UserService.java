@@ -2,7 +2,6 @@ package ru.yandex.practicum.catsgram.service;
 
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.dal.UserRepository;
-import ru.yandex.practicum.catsgram.dto.UserDto;
 import ru.yandex.practicum.catsgram.model.User;
 
 import java.util.List;
@@ -16,12 +15,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserDto> getUsers() {
+    public List<User> getUsers() {
         return userRepository.findAll();
     }
 
     public Optional<User> findUserById(long authorId) {
-        return userRepository.findUserById(authorId);
+        return userRepository.findById(authorId);
     }
 
     public User create(User user) {
